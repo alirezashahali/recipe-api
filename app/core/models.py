@@ -4,6 +4,8 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin
     )
+
+from django.conf import settings
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -44,4 +46,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
 
+
+class Tag(models.Model):
+    """tags to be used for a recipe"""
+    name = models.CharField(max_length = 250)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='tags')
+
+    def __str__(self):
+        return self.name
 
